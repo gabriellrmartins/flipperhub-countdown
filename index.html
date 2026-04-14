@@ -1,5 +1,1044 @@
-    defaults: {
-        // Other defaults...
-        launchDate: '2026-04-30',
-        // Other defaults...
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlipperHub — Countdown to Launch</title>
+<meta name="description" content="Faltam poucos dias para o lançamento do FlipperHub — plataforma de gestão de investimentos imobiliários. Acompanhe a contagem regressiva!">
+
+<!-- Open Graph (WhatsApp, LinkedIn, Facebook) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="FlipperHub — Countdown to Launch 🚀">
+<meta property="og:description" content="Plataforma de gestão de investimentos imobiliários. Lançamento em 30 de Abril de 2026. Acompanhe a contagem regressiva e a meta de 1.000 usuários!">
+<meta property="og:image" content="https://og-image-generator.vercel.app/FlipperHub%20%E2%80%94%20Launch%20Countdown.png?theme=dark&md=1&fontSize=100px">
+<meta property="og:url" content="https://flipperhub.com.br">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="FlipperHub">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FlipperHub — Countdown to Launch 🚀">
+<meta name="twitter:description" content="Plataforma de gestão de investimentos imobiliários. Lançamento em 30/04/2026!">
+
+<!-- Favicon (emoji rocket as SVG) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+
+<!-- Theme color for mobile browsers -->
+<meta name="theme-color" content="#0a0c10">
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0c10;
+    --bg-card: rgba(255,255,255,0.03);
+    --accent: #00e5a0;
+    --accent-glow: rgba(0,229,160,0.25);
+    --accent-dim: rgba(0,229,160,0.08);
+    --text-primary: #f0f2f5;
+    --text-secondary: #6b7280;
+    --text-muted: #374151;
+    --danger: #ff4d6a;
+    --warning: #ffb020;
+    --gold: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Glow orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: rgba(0,229,160,0.08);
+    top: -150px; left: -100px;
+    animation: orbFloat 12s ease-in-out infinite;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: rgba(0,100,255,0.06);
+    bottom: -100px; right: -80px;
+    animation: orbFloat 15s ease-in-out infinite reverse;
+  }
+  .orb-3 {
+    width: 300px; height: 300px;
+    background: rgba(255,215,0,0.04);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: orbFloat 10s ease-in-out infinite 3s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.1); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInDown 0.8s ease-out;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .logo::before, .logo::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent));
+  }
+  .logo::after {
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .header h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header p {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: 100px;
+    padding: 8px 20px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+    50% { opacity: 0.3; box-shadow: none; }
+  }
+
+  /* Countdown */
+  .countdown-section {
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .countdown-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .countdown-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .countdown-card:hover {
+    border-color: rgba(0,229,160,0.2);
+    background: rgba(0,229,160,0.03);
+    transform: translateY(-2px);
+  }
+
+  .countdown-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+  }
+
+  .countdown-value {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .countdown-unit {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  /* Launch date display */
+  .launch-date {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease-out 0.35s both;
+  }
+
+  .launch-date-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px 28px;
+  }
+
+  .launch-date-icon {
+    font-size: 28px;
+  }
+
+  .launch-date-text {
+    text-align: left;
+  }
+
+  .launch-date-text span {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .launch-date-text strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* Goal tracker */
+  .goal-section {
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+  }
+
+  .goal-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .goal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .goal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .goal-title {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .goal-number {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .goal-current {
+    color: var(--accent);
+  }
+
+  .goal-separator {
+    color: var(--text-muted);
+    font-size: 32px;
+    font-weight: 300;
+  }
+
+  .goal-target {
+    color: var(--text-secondary);
+    font-size: 32px;
+    font-weight: 300;
+  }
+
+  .goal-percentage {
+    background: var(--accent-dim);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: 12px;
+    padding: 12px 20px;
+    text-align: center;
+  }
+
+  .goal-percentage .pct-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .goal-percentage .pct-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Progress bar */
+  .progress-container {
+    margin-bottom: 24px;
+  }
+
+  .progress-bar-bg {
+    height: 12px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--accent), #00ffc3);
+    position: relative;
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    animation: progressShine 2s ease-in-out infinite;
+  }
+
+  @keyframes progressShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+
+  /* Milestones */
+  .milestones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    position: relative;
+  }
+
+  .milestone {
+    text-align: center;
+    padding: 12px 4px;
+    position: relative;
+  }
+
+  .milestone-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    border: 2px solid var(--text-muted);
+    background: var(--bg-deep);
+    transition: all 0.3s ease;
+  }
+
+  .milestone.reached .milestone-dot {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+
+  .milestone.current .milestone-dot {
+    border-color: var(--gold);
+    background: transparent;
+    animation: pulseDot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(255,215,0,0); }
+  }
+
+  .milestone-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+
+  .milestone.reached .milestone-value { color: var(--accent); }
+  .milestone.current .milestone-value { color: var(--gold); }
+
+  .milestone-label {
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s ease-out 0.65s both;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-color: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+  }
+
+  .stat-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Pace indicator */
+  .pace-section {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+  }
+
+  .pace-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .pace-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .pace-indicator {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .pace-indicator.on-track {
+    background: rgba(0,229,160,0.1);
+  }
+
+  .pace-indicator.behind {
+    background: rgba(255,77,106,0.1);
+  }
+
+  .pace-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .pace-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .pace-rate {
+    text-align: right;
+  }
+
+  .pace-rate .rate-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .pace-rate .rate-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: 1fr; }
+    .milestones { grid-template-columns: repeat(2, 1fr); }
+    .goal-card { padding: 24px; }
+    .pace-card { flex-direction: column; text-align: center; }
+    .pace-left { flex-direction: column; }
+    .pace-rate { text-align: center; }
+  }
+
+  /* Settings panel */
+  .settings-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text-secondary);
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+  }
+
+  .settings-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .settings-panel {
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    background: rgba(15,17,23,0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    z-index: 100;
+    display: none;
+    width: 300px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .settings-panel.open { display: block; }
+
+  .settings-panel h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .setting-row {
+    margin-bottom: 16px;
+  }
+
+  .setting-row label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+  }
+
+  .setting-row input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text-primary);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .setting-row input:focus {
+    border-color: var(--accent);
+  }
+
+  .settings-save {
+    width: 100%;
+    padding: 10px;
+    background: var(--accent);
+    color: var(--bg-deep);
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .settings-save:hover {
+    filter: brightness(1.15);
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="container">
+
+  <header class="header">
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      EM DESENVOLVIMENTO
+    </div>
+    <div class="logo">FlipperHub</div>
+    <h1>Countdown to Launch</h1>
+    <p>Plataforma de gestão de investimentos imobiliários</p>
+  </header>
+
+  <!-- Countdown -->
+  <section class="countdown-section">
+    <div class="countdown-label">Tempo restante para o lançamento</div>
+    <div class="countdown-grid">
+      <div class="countdown-card">
+        <div class="countdown-value" id="days">--</div>
+        <div class="countdown-unit">Dias</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-value" id="hours">--</div>
+        <div class="countdown-unit">Horas</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-value" id="minutes">--</div>
+        <div class="countdown-unit">Minutos</div>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-value" id="seconds">--</div>
+        <div class="countdown-unit">Segundos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Launch date -->
+  <div class="launch-date">
+    <div class="launch-date-inner">
+      <span class="launch-date-icon">🚀</span>
+      <div class="launch-date-text">
+        <span>Data de lançamento</span>
+        <strong id="launch-date-display">--</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Goal tracker -->
+  <section class="goal-section">
+    <div class="goal-card">
+      <div class="goal-header">
+        <div>
+          <div class="goal-title">Meta de Usuários — 2026</div>
+          <div class="goal-number">
+            <span class="goal-current" id="current-users">0</span>
+            <span class="goal-separator">/</span>
+            <span class="goal-target" id="target-display">1.000</span>
+          </div>
+        </div>
+        <div class="goal-percentage">
+          <div class="pct-value" id="pct-value">0%</div>
+          <div class="pct-label">concluído</div>
+        </div>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <div class="milestones" id="milestones-container">
+        <!-- Milestones inserted by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-value" id="days-left-year">--</div>
+      <div class="stat-label">Dias restantes no ano</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👤</div>
+      <div class="stat-value" id="users-needed">--</div>
+      <div class="stat-label">Usuários restantes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📈</div>
+      <div class="stat-value" id="daily-rate">--</div>
+      <div class="stat-label">Necessários por dia</div>
+    </div>
+  </div>
+
+  <!-- Pace indicator -->
+  <section class="pace-section">
+    <div class="pace-card">
+      <div class="pace-left">
+        <div class="pace-indicator" id="pace-icon"></div>
+        <div class="pace-info">
+          <h3 id="pace-status">Calculando...</h3>
+          <p id="pace-detail">Analisando a velocidade de aquisição</p>
+        </div>
+      </div>
+      <div class="pace-rate">
+        <div class="rate-value" id="pace-weekly">--</div>
+        <div class="rate-label">usuários / semana</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Settings -->
+<button class="settings-toggle" id="settings-btn" title="Configurações">⚙</button>
+<div class="settings-panel" id="settings-panel">
+  <h3>⚙ Configurações</h3>
+  <div class="setting-row">
+    <label>Data de Lançamento</label>
+    <input type="date" id="input-launch-date" />
+  </div>
+  <div class="setting-row">
+    <label>Usuários Atuais</label>
+    <input type="number" id="input-current-users" min="0" value="0" />
+  </div>
+  <div class="setting-row">
+    <label>Meta de Usuários</label>
+    <input type="number" id="input-target-users" min="1" value="1000" />
+  </div>
+  <button class="settings-save" id="save-btn">Atualizar</button>
+</div>
+
+<script>
+  // ---- CONFIG ----
+  const defaults = {
+    launchDate: '2026-04-30',
+    currentUsers: 0,
+    targetUsers: 1000
+  };
+
+  function loadConfig() {
+    return {
+      launchDate: defaults.launchDate,
+      currentUsers: defaults.currentUsers,
+      targetUsers: defaults.targetUsers
+    };
+  }
+
+  let config = loadConfig();
+
+  // ---- ELEMENTS ----
+  const $days = document.getElementById('days');
+  const $hours = document.getElementById('hours');
+  const $minutes = document.getElementById('minutes');
+  const $seconds = document.getElementById('seconds');
+  const $launchDisplay = document.getElementById('launch-date-display');
+  const $currentUsers = document.getElementById('current-users');
+  const $targetDisplay = document.getElementById('target-display');
+  const $pctValue = document.getElementById('pct-value');
+  const $progressFill = document.getElementById('progress-fill');
+  const $daysLeftYear = document.getElementById('days-left-year');
+  const $usersNeeded = document.getElementById('users-needed');
+  const $dailyRate = document.getElementById('daily-rate');
+  const $paceIcon = document.getElementById('pace-icon');
+  const $paceStatus = document.getElementById('pace-status');
+  const $paceDetail = document.getElementById('pace-detail');
+  const $paceWeekly = document.getElementById('pace-weekly');
+  const $milestonesContainer = document.getElementById('milestones-container');
+
+  const $settingsBtn = document.getElementById('settings-btn');
+  const $settingsPanel = document.getElementById('settings-panel');
+  const $inputLaunch = document.getElementById('input-launch-date');
+  const $inputCurrent = document.getElementById('input-current-users');
+  const $inputTarget = document.getElementById('input-target-users');
+  const $saveBtn = document.getElementById('save-btn');
+
+  // ---- SETTINGS ----
+  $settingsBtn.addEventListener('click', () => {
+    $settingsPanel.classList.toggle('open');
+  });
+
+  $saveBtn.addEventListener('click', () => {
+    config.launchDate = $inputLaunch.value || defaults.launchDate;
+    config.currentUsers = parseInt($inputCurrent.value) || 0;
+    config.targetUsers = parseInt($inputTarget.value) || 1000;
+    $settingsPanel.classList.remove('open');
+    renderAll();
+  });
+
+  // ---- FORMAT ----
+  function fmt(n) {
+    return n.toLocaleString('pt-BR');
+  }
+
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  }
+
+  // ---- COUNTDOWN ----
+  function updateCountdown() {
+    const now = new Date();
+    const launch = new Date(config.launchDate + 'T00:00:00');
+    let diff = launch - now;
+
+    if (diff <= 0) {
+      $days.textContent = '🎉';
+      $hours.textContent = '--';
+      $minutes.textContent = '--';
+      $seconds.textContent = '--';
+      return;
     }
+
+    const d = Math.floor(diff / 86400000); diff %= 86400000;
+    const h = Math.floor(diff / 3600000); diff %= 3600000;
+    const m = Math.floor(diff / 60000); diff %= 60000;
+    const s = Math.floor(diff / 1000);
+
+    $days.textContent = d;
+    $hours.textContent = pad(h);
+    $minutes.textContent = pad(m);
+    $seconds.textContent = pad(s);
+  }
+
+  // ---- MILESTONES ----
+  function renderMilestones() {
+    const target = config.targetUsers;
+    const current = config.currentUsers;
+    const steps = [
+      { value: Math.round(target * 0.1), label: 'Early adopters' },
+      { value: Math.round(target * 0.25), label: 'Tração' },
+      { value: Math.round(target * 0.5), label: 'Meio do caminho' },
+      { value: target, label: 'Meta final' }
+    ];
+
+    $milestonesContainer.innerHTML = '';
+    steps.forEach(step => {
+      const reached = current >= step.value;
+      const isCurrent = !reached && (current >= (step.value * 0.8));
+      const div = document.createElement('div');
+      div.className = `milestone ${reached ? 'reached' : ''} ${isCurrent ? 'current' : ''}`;
+      div.innerHTML = `
+        <div class="milestone-dot"></div>
+        <div class="milestone-value">${fmt(step.value)}</div>
+        <div class="milestone-label">${step.label}</div>
+      `;
+      $milestonesContainer.appendChild(div);
+    });
+  }
+
+  // ---- RENDER ----
+  function renderAll() {
+    // Inputs
+    $inputLaunch.value = config.launchDate;
+    $inputCurrent.value = config.currentUsers;
+    $inputTarget.value = config.targetUsers;
+
+    // Launch date display
+    $launchDisplay.textContent = formatDate(config.launchDate);
+
+    // Users
+    const pct = Math.min((config.currentUsers / config.targetUsers) * 100, 100);
+    $currentUsers.textContent = fmt(config.currentUsers);
+    $targetDisplay.textContent = fmt(config.targetUsers);
+    $pctValue.textContent = pct.toFixed(1) + '%';
+    setTimeout(() => { $progressFill.style.width = pct + '%'; }, 100);
+
+    // Stats
+    const now = new Date();
+    const endOfYear = new Date(now.getFullYear(), 11, 31);
+    const daysLeftYear = Math.ceil((endOfYear - now) / 86400000);
+    const usersNeeded = Math.max(config.targetUsers - config.currentUsers, 0);
+    const dailyRate = daysLeftYear > 0 ? (usersNeeded / daysLeftYear) : 0;
+    const weeklyRate = dailyRate * 7;
+
+    $daysLeftYear.textContent = fmt(daysLeftYear);
+    $usersNeeded.textContent = fmt(usersNeeded);
+    $dailyRate.textContent = dailyRate.toFixed(1);
+    $paceWeekly.textContent = weeklyRate.toFixed(0);
+
+    // Pace status
+    const isOnTrack = dailyRate <= 5;
+    $paceIcon.className = `pace-indicator ${isOnTrack ? 'on-track' : 'behind'}`;
+    $paceIcon.textContent = isOnTrack ? '✓' : '⚡';
+
+    if (usersNeeded === 0) {
+      $paceStatus.textContent = 'Meta Atingida! 🎉';
+      $paceDetail.textContent = 'Parabéns! A meta de usuários foi alcançada.';
+    } else if (dailyRate <= 2) {
+      $paceStatus.textContent = 'Ritmo Confortável';
+      $paceDetail.textContent = 'A meta pode ser atingida com crescimento orgânico.';
+    } else if (dailyRate <= 5) {
+      $paceStatus.textContent = 'No Caminho Certo';
+      $paceDetail.textContent = 'Mantenha o ritmo de aquisição consistente.';
+    } else {
+      $paceStatus.textContent = 'Precisa Acelerar';
+      $paceDetail.textContent = 'Considere estratégias de growth hacking.';
+    }
+
+    renderMilestones();
+    updateCountdown();
+  }
+
+  // ---- INIT ----
+  renderAll();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
